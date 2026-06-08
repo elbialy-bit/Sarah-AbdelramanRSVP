@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSVP — Abdelrahman & Sarah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fdfaf7;
+      --bg-card: #ffffff;
+      --text: #2a2118;
+      --text-muted: #7a6e65;
+      --text-hint: #b0a79e;
+      --border: rgba(90,70,50,0.15);
+      --border-mid: rgba(90,70,50,0.25);
+      --border-strong: rgba(90,70,50,0.4);
+      --accent-fill: #EEEDFE;
+      --accent-border: #9e9abf;
+      --accent-text: #3C3489;
+      --error: #A32D2D;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+    }
+
+    .floral-top {
+      font-size: 26px;
+      letter-spacing: 10px;
+      color: #c4a882;
+      margin-bottom: 1.75rem;
+      animation: fadeDown 0.9s ease both;
+    }
+
+    .couple-names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 44px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.2;
+      color: var(--text);
+      animation: fadeUp 0.9s ease 0.15s both;
+    }
+
+    .ampersand {
+      display: block;
+      font-size: 26px;
+      color: var(--text-muted);
+      margin: 0.3rem 0;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      animation: fadeUp 0.9s ease 0.3s both;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 2rem auto;
+      max-width: 280px;
+      animation: fadeUp 0.9s ease 0.4s both;
+    }
+    .divider-line { flex: 1; height: 0.5px; background: var(--border-mid); }
+    .divider-icon { font-size: 14px; color: #c4a882; }
+
+    /* ── Card ── */
+    .form-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.25rem 2.25rem;
+      animation: fadeUp 0.9s ease 0.5s both;
+      box-shadow: 0 2px 24px rgba(90,60,30,0.06);
+    }
+
+    .form-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 1.75rem;
+      color: var(--text);
+    }
+
+    .field-group { margin-bottom: 1.25rem; }
+
+    label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 0.5px solid var(--border-mid);
+      border-radius: var(--radius-md);
+      font-family: 'Jost', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus { border-color: var(--border-strong); }
+    input[type="text"]::placeholder { color: var(--text-hint); }
+
+    .attend-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .attend-btn {
+      border: 0.5px solid var(--border-mid);
+      border-radius: var(--radius-md);
+      padding: 14px 10px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--bg);
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+    .attend-btn:hover { background: #f5f0ea; color: var(--text); }
+    .attend-btn.selected-yes {
+      border-color: var(--accent-border);
+      background: var(--accent-fill);
+      color: var(--accent-text);
+    }
+    .attend-btn.selected-no {
+      border-color: var(--border-strong);
+      background: #f5f0ea;
+      color: var(--text);
+    }
+
+    .btn-icon { font-size: 15px; }
+
+    .error-msg {
+      color: var(--error);
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 1.75rem;
+      background: transparent;
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .submit-btn:hover { background: #f5f0ea; }
+    .submit-btn:active { transform: scale(0.99); }
+
+    /* ── Success ── */
+    .success-state {
+      text-align: center;
+      padding: 2rem 1rem;
+      display: none;
+      animation: fadeUp 0.6s ease both;
+    }
+    .success-floral { font-size: 30px; color: #c4a882; margin-bottom: 1.25rem; }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-style: italic;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+    .success-msg { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── Footer florals ── */
+    .floral-bottom {
+      text-align: center;
+      font-size: 20px;
+      color: #c4a882;
+      letter-spacing: 10px;
+      padding: 2rem 0 0;
+      animation: fadeUp 0.9s ease 0.65s both;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .couple-names { font-size: 34px; }
+      .form-card { padding: 1.5rem 1.25rem; }
+      .attend-group { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <div class="hero">
+      <div class="floral-top" aria-hidden="true">✿ ✾ ✿</div>
+      <h1 class="couple-names">
+        Abdelrahman Elbialy
+        <span class="ampersand">&amp;</span>
+        Sarah Tageldeen
+      </h1>
+      <p class="subtitle">Request the honour of your presence</p>
+      <div class="divider" aria-hidden="true">
+        <div class="divider-line"></div>
+        <span class="divider-icon">♡</span>
+        <div class="divider-line"></div>
+      </div>
+    </div>
+
+    <div class="form-card" id="form-section">
+      <p class="form-heading">Will you be joining us?</p>
+
+      <div class="field-group">
+        <label for="guest-name">Your name</label>
+        <input type="text" id="guest-name" placeholder="Enter your full name" autocomplete="name" />
+      </div>
+
+      <div class="field-group">
+        <label>Will you attend?</label>
+        <div class="attend-group">
+          <button class="attend-btn" id="btn-yes" onclick="selectAttend('yes')" aria-pressed="false">
+            <span class="btn-icon" aria-hidden="true">✓</span> Joyfully accepts
+          </button>
+          <button class="attend-btn" id="btn-no" onclick="selectAttend('no')" aria-pressed="false">
+            <span class="btn-icon" aria-hidden="true">✕</span> Regretfully declines
+          </button>
+        </div>
+      </div>
+
+      <p class="error-msg" id="error-msg" role="alert">Please fill in your name and select an option.</p>
+
+      <button class="submit-btn" onclick="submitRSVP()">Send my reply</button>
+    </div>
+
+    <div class="success-state" id="success-section" aria-live="polite">
+      <div class="success-floral" aria-hidden="true">✿</div>
+      <p class="success-title" id="success-title">Thank you!</p>
+      <p class="success-msg" id="success-msg">We look forward to celebrating with you.</p>
+    </div>
+
+    <div class="floral-bottom" aria-hidden="true">✾ ✿ ✾</div>
+
+  </main>
+
+  <script>
+    let attendChoice = null;
+
+    function selectAttend(val) {
+      attendChoice = val;
+      const btnYes = document.getElementById('btn-yes');
+      const btnNo  = document.getElementById('btn-no');
+      btnYes.className = 'attend-btn' + (val === 'yes' ? ' selected-yes' : '');
+      btnNo.className  = 'attend-btn' + (val === 'no'  ? ' selected-no'  : '');
+      btnYes.setAttribute('aria-pressed', val === 'yes');
+      btnNo.setAttribute('aria-pressed',  val === 'no');
+    }
+
+    async function submitRSVP() {
+      const name = document.getElementById('guest-name').value.trim();
+      const err  = document.getElementById('error-msg');
+      const btn  = document.querySelector('.submit-btn');
+
+      if (!name || !attendChoice) {
+        err.style.display = 'block';
+        return;
+      }
+      err.style.display = 'none';
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('https://formspree.io/f/mykawpjj', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name, attending: attendChoice === 'yes' ? 'Yes' : 'No' })
+        });
+
+        if (!res.ok) throw new Error('Network error');
+
+        document.getElementById('form-section').style.display = 'none';
+        const s = document.getElementById('success-section');
+        s.style.display = 'block';
+
+        if (attendChoice === 'yes') {
+          document.getElementById('success-title').textContent = 'We cannot wait to see you, ' + name + '!';
+          document.getElementById('success-msg').textContent   = 'Your RSVP has been received. See you at the celebration!';
+        } else {
+          document.getElementById('success-title').textContent = 'Thank you for letting us know, ' + name + '.';
+          document.getElementById('success-msg').textContent   = 'You will be missed. Wishing you all the best!';
+        }
+      } catch (e) {
+        btn.textContent = 'Send my reply';
+        btn.disabled = false;
+        err.textContent = 'Something went wrong. Please try again.';
+        err.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
